@@ -1,0 +1,71 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+dependencies {
+
+    constraints {
+        //Mojarra
+        api 'jakarta.faces:jakarta.faces-api:4.1.2'
+
+        api 'io.github.classgraph:classgraph:4.8.195'
+
+        //Jakarta EE (if not covered by Spring Boot)
+        api 'jakarta.enterprise:jakarta.enterprise.cdi-api:4.1.0'
+        api 'jakarta.enterprise:jakarta.enterprise.cdi-el-api:4.1.0'
+        api 'jakarta.ejb:jakarta.ejb-api:4.0.1'
+
+        //AdminFaces
+        api "com.github.adminfaces:admin-template:2.0"
+        api "com.github.adminfaces:admin-theme:1.6.0"
+
+        //Bootsfaces
+        api 'net.bootsfaces:bootsfaces:2.0.1'
+
+        //Primefaces
+        api 'org.primefaces:primefaces:15.0.18'
+        api 'org.primefaces:primefaces-themes:15.0.18'
+        api "org.primefaces.extensions:primefaces-extensions:15.0.18"
+        api "org.primefaces.extensions:resources-monacoeditor:15.0.18"
+
+        api 'org.jboss.weld.servlet:weld-servlet-core:6.0.4.Final'
+
+        api 'org.apache.openwebbeans:openwebbeans-web:4.1.1'
+        api 'org.apache.openwebbeans:openwebbeans-jsf:4.1.1'
+        api 'org.apache.openwebbeans:openwebbeans-el22:4.1.1'
+
+        //MyFaces Tobago
+        api 'org.apache.myfaces.tobago:tobago-core:6.12.1'
+        api 'org.apache.myfaces.tobago:tobago-theme-standard:6.12.1'
+        api 'org.apache.myfaces.tobago:tobago-theme-speyside:6.12.1'
+        api 'org.apache.myfaces.tobago:tobago-theme-scarborough:6.12.1'
+        api 'org.apache.myfaces.tobago:tobago-theme-roxborough:6.12.1'
+        api 'org.apache.myfaces.tobago:tobago-theme-charlotteville:6.12.1'
+
+        api 'org.omnifaces:omnifaces:5.5.4'
+
+        //Ocpsoft Rewrite
+        api 'org.ocpsoft.rewrite:rewrite-servlet:10.0.2.Final'
+        api 'org.ocpsoft.rewrite:rewrite-config-prettyfaces:10.0.2.Final'
+        api 'org.ocpsoft.rewrite:rewrite-integration-spring:10.0.2.Final'
+        api 'org.ocpsoft.rewrite:rewrite-integration-faces:10.0.2.Final'
+        api 'org.ocpsoft.rewrite:rewrite-integration-cdi:10.0.2.Final'
+        api 'org.ocpsoft.logging:logging-adapter-slf4j:1.0.5.Final'
+    }
+}
+
+publishing {
+    publications {
+        bom(MavenPublication) {
+            from components.javaPlatform
+
+            pom {
+                name = 'JoinFaces Dependencies'
+                description = 'Dependency management for JoinFaces Dependencies'
+            }
+        }
+    }
+}
+
+

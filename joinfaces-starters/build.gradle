@@ -1,0 +1,16 @@
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "io.freefair.maven-publish-java"
+
+    tasks.named("jar", Jar) {
+        manifest {
+            attributes 'Spring-Boot-Jar-Type': 'dependencies-starter'
+        }
+    }
+
+    dependencies {
+        api platform(project(':joinfaces-platform'))
+
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+}

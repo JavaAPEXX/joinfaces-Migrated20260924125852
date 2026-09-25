@@ -1,0 +1,117 @@
+import org.joinfaces.build.BomDocumentation
+import org.joinfaces.build.PropertyDocumentation
+
+plugins {
+    id "org.asciidoctor.jvm.convert" version "4.0.5"
+    id "io.freefair.aggregate-javadoc"
+    id "io.freefair.javadoc-links"
+    id "io.freefair.okhttp"
+    id "maven-publish"
+}
+
+configurations {
+    asciidoctorExt
+}
+
+dependencies {
+    javadoc project(":joinfaces")
+    javadoc project(":joinfaces-autoconfigure")
+    javadoc project(":joinfaces-security-taglib")
+
+    javadocClasspath "jakarta.platform:jakarta.jakartaee-web-api:11.0.0"
+
+    javadocClasspath "org.glassfish:jakarta.faces:$mojarra4Version"
+    javadocClasspath "org.apache.myfaces.core:myfaces-impl:$myfaces4Version"
+
+    javadocClasspath "org.springframework.boot:spring-boot-starter-tomcat"
+    javadocClasspath "org.springframework.boot:spring-boot-starter-jetty"
+
+    javadocClasspath project(":joinfaces-starters:adminfaces-spring-boot-starter")
+    javadocClasspath project(":joinfaces-starters:omnifaces-spring-boot-starter")
+    javadocClasspath project(":joinfaces-starters:primefaces-spring-boot-starter")
+    javadocClasspath project(":joinfaces-starters:rewrite-spring-boot-starter")
+    javadocClasspath project(":joinfaces-starters:tobago-spring-boot-starter")
+
+    javadocClasspath "org.jboss.weld.servlet:weld-servlet-core"
+    javadocClasspath "org.apache.openwebbeans:openwebbeans-web"
+
+    javadocClasspath "org.springframework.boot:spring-boot-starter-data-jpa"
+    javadocClasspath "org.springframework.session:spring-session-core"
+    javadocClasspath "com.github.spotbugs:spotbugs-annotations:4.10.4"
+    javadocClasspath "org.apache.maven.plugin-tools:maven-plugin-annotations:3.16.0"
+
+    asciidoctorExt "io.spring.asciidoctor:spring-asciidoctor-extensions-block-switch:0.6.3"
+}
+
+configurations.javadocClasspath.resolutionStrategy {
+    force "org.primefaces:primefaces:15.+"
+}
+
+tasks.named("javadoc", Javadoc) {
+    title = "JoinFaces $version API"
+}
+
+tasks.register("propertyDocs", PropertyDocumentation) {
+    inputFile = file("$rootDir/joinfaces-autoconfigure/build/classes/java/main/META-INF/spring-configuration-metadata.json")
+    outputFile = file("src/docs/asciidoc/generated/_properties.adoc")
+    dependsOn ":joinfaces-autoconfigure:classes"
+}
+
+tasks.register("bomDocs", BomDocumentation) {
+    dependsOn ":joinfaces-dependencies:generatePomFileForBomPublication"
+    inputFile = tasks.findByPath(":joinfaces-dependencies:generatePomFileForBomPublication").destination
+    outputFile = file("src/docs/asciidoc/generated/_versions.adoc")
+}
+
+asciidoctorj {
+    modules {
+        diagram.use()
+        diagram.version '1.5.16'
+    }
+}
+
+tasks.named("asciidoctor") {
+    baseDirFollowsSourceDir()
+    dependsOn propertyDocs, bomDocs
+    inputs.dir("src/docs/asciidoc")
+    configurations 'asciidoctorExt'
+    attributes revnumber: project.version,
+            'spring-version': '6.0.x',
+            'spring-boot-version': org.springframework.boot.gradle.plugin.SpringBootPlugin.SPRING_BOOT_VERSION
+}
+
+tasks.register("docsZip", Zip) {
+    group = 'build'
+    archiveClassifier = 'docs'
+    dependsOn asciidoctor
+
+    into("api") {
+        from javadoc
+    }
+    from("$asciidoctor.outputDir") {
+        into "reference"
+    }
+}
+
+tasks.register("uploadDocs", io.freefair.gradle.plugins.okhttp.tasks.UploadFile) {
+    dependsOn docsZip
+    file = docsZip.archiveFile
+    username = findProperty("joinfacesDocsUser")
+    password = findProperty("joinfacesDocsPass")
+    url = "https://docs.joinfaces.org/api/$project.version"
+}
+
+publishing {
+    publications {
+        javadoc(MavenPublication) {
+            artifactId = 'joinfaces-documentation'
+
+            pom {
+                name = "JoinFaces"
+                description = "JoinFaces"
+            }
+
+            artifact tasks.named("javadocJar")
+        }
+    }
+}

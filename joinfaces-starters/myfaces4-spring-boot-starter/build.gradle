@@ -1,0 +1,56 @@
+description = 'MyFaces Spring Boot Starter'
+tasks.named("jar", Jar) {
+    manifest.attributes('Automatic-Module-Name': 'joinfaces.starter.myfaces4')
+}
+
+dependencies {
+    api "org.apache.myfaces.core:myfaces-api:$myfaces4Version"
+    implementation("org.apache.myfaces.core:myfaces-impl:$myfaces4Version") {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+
+    runtimeOnly('jakarta.enterprise:jakarta.enterprise.cdi-api') {
+        exclude group: 'jakarta.el', module: 'jakarta.el-api'
+        exclude group: 'jakarta.ejb', module: 'jakarta.ejb-api'
+    }
+
+    testImplementation project(':joinfaces-autoconfigure')
+    testImplementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework:spring-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+configurations {
+    apiElements {
+        outgoing {
+            capability("$group:${base.archivesName.get()}:$version")
+            capability("$group:faces-impl-spring-boot-starter:$version")
+        }
+    }
+    runtimeElements {
+        outgoing {
+            capability("$group:${base.archivesName.get()}:$version")
+            capability("$group:faces-impl-spring-boot-starter:$version")
+        }
+    }
+}
+
+publishing {
+    publications {
+        relocation(MavenPublication) {
+            pom {
+                // Old artifact coordinates
+                artifactId = "myfaces3-spring-boot-starter"
+
+                distributionManagement {
+                    relocation {
+                        // New artifact coordinates
+                        artifactId = "myfaces4-spring-boot-starter"
+                        message = "Update to MyFaces 4.x baseline"
+                    }
+                }
+            }
+        }
+    }
+}

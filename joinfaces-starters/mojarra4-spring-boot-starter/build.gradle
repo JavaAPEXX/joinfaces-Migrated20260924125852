@@ -1,0 +1,49 @@
+description = 'Mojarra Spring Boot Starter'
+tasks.named("jar", Jar) {
+    manifest.attributes('Automatic-Module-Name': 'joinfaces.starter.mojarra4')
+}
+
+dependencies {
+    api "org.glassfish:jakarta.faces:$mojarra4Version"
+
+    api project(':joinfaces-starters:cdi-spring-boot-starter')
+
+    runtimeOnly('jakarta.enterprise:jakarta.enterprise.cdi-el-api') {
+        exclude group: 'jakarta.el', module: 'jakarta.el-api'
+        exclude group: 'jakarta.ejb', module: 'jakarta.ejb-api'
+    }
+}
+
+configurations {
+    apiElements {
+        outgoing {
+            capability("$group:${base.archivesName.get()}:$version")
+            capability("$group:faces-impl-spring-boot-starter:$version")
+        }
+    }
+    runtimeElements {
+        outgoing {
+            capability("$group:${base.archivesName.get()}:$version")
+            capability("$group:faces-impl-spring-boot-starter:$version")
+        }
+    }
+}
+
+publishing {
+    publications {
+        relocation(MavenPublication) {
+            pom {
+                // Old artifact coordinates
+                artifactId = "mojarra3-spring-boot-starter"
+
+                distributionManagement {
+                    relocation {
+                        // New artifact coordinates
+                        artifactId = "mojarra4-spring-boot-starter"
+                        message = "Update to Mojarra 4.x baseline"
+                    }
+                }
+            }
+        }
+    }
+}

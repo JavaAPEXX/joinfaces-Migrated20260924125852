@@ -1,0 +1,51 @@
+allprojects {
+    group = "org.joinfaces.test"
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "application"
+    apply plugin: "org.springframework.boot"
+
+    application {
+        mainClass = "org.joinfaces.test.JoinfacesTestApplication"
+    }
+
+    tasks.withType(Javadoc).configureEach {
+        enabled = false
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    dependencies {
+        implementation project(":joinfaces-security-taglib")
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+
+        implementation 'org.primefaces:primefaces::jakarta'
+
+        testImplementation('org.springframework.boot:spring-boot-starter-restclient')
+        testImplementation('org.springframework.boot:spring-boot-resttestclient')
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.junit.jupiter:junit-jupiter-api'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    }
+
+    apply plugin: "org.graalvm.buildtools.native"
+
+    processAot {
+        javaLauncher = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(21)
+            vendor = JvmVendorSpec.GRAAL_VM
+        }
+    }
+
+    graalvmNative {
+        toolchainDetection = true
+    }
+}

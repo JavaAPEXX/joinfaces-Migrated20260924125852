@@ -1,0 +1,55 @@
+= JoinFaces Reference Guide
+Marcelo Fernandes; Lars Grefer
+:toc: left
+:icons: font
+:stylesheet: asciidoctor.css
+:source-highlighter: prettify
+:sectnums:
+:sectanchors:
+:hide-uri-scheme:
+
+== About the Documentation
+
+The documentation of JoinFaces {revnumber} consists of two parts:
+
+- This Reference Guide
+- The Javadoc API
+
+The latest copy of the user guide is available at https://docs.joinfaces.org/current/reference +
+and the corresponding javadocs can be found at https://docs.joinfaces.org/current/api.
+
+Copies of this document may be made for your own use and for distribution to others,
+provided that you do not charge any fee for such copies and further provided that each copy contains this Copyright Notice,
+whether distributed in print or electronically.
+
+NOTE: All of JoinFaces is open source, including this documentation.
+The source can be found on https://github.com/joinfaces/joinfaces[GitHub].
+
+include::_getting-started.adoc[]
+
+include::_features.adoc[]
+
+include::_how-to-faq.adoc[]
+
+[[properties]]
+[appendix]
+== Configuration Properties
+
+This appendix contains a alphabetical list of all properties handled by JoinFaces.
+
+NOTE: The properties already supported by _Spring Boot_ itself aren't listed here again.
+They can be found https://docs.spring.io/spring-boot/{spring-boot-version}/appendix/application-properties/index.html[in
+the corresponding chapter of the _Spring Boot Reference Guide_].
+
+include::generated/_properties.adoc[]
+
+[[versions]]
+[appendix]
+== Dependency versions
+
+NOTE: The versions already handled by the dependency management of _Spring Boot_ aren't listed here again.
+The can be found in
+https://docs.spring.io/spring-boot/{spring-boot-version}/appendix/dependency-versions/coordinates.html[the
+corresponding chapter of the _Spring Boot Reference Guide_].
+
+include::generated/_versions.adoc[]

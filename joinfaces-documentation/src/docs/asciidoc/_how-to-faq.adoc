@@ -1,0 +1,64 @@
+== 'How-to' guides and FAQs
+
+=== Traditional war deployment
+
+JoinFaces can be used in traditional web applications which are deployed to an existing servlet-container.
+
+1. Create a deployable war file as descibed in the https://docs.spring.io/spring-boot/{spring-boot-version}/how-to/deployment/traditional-deployment.html[_Spring Boot Reference Guide_].
+2. Mark all dependencies as `provided` which will be provided by the server you are deploying to.
+(Keep in mind that full Java-EE servers like Glassfish or WebLogic already provide a JSF implementation and other
+Java-EE related libraries which the joinfaces starters have to pull in for embedded containers.)
+3. The Servlet and ServletFilter configurations through `joinfaces.faces-servlet`
+will not work correctly. You can configure those in the traditional way in `web.xml` if you need to.
+
+=== Internationalization and Resources Bundles
+
+JoinFaces based applications can use two different mechanisms for internationalization,
+which can be mixed up easily.
+
+1. JSF `<resource-bundle>`
+2. Spring `MessageSource`
+
+TIP: We recommend to only use one of the mechanisms in order to avoid confusion.
+If you want to or have to use both anyways, keep in mind that these are different API's
+which have to be configured differently and might behave slightly different.
+
+==== JSF `<resource-bundle>`
+
+JSF resource bundles work the same way in JoinFaces as they would in a plain JSF application.
+
+Just declare the resources bundle in your `faces-config.xml`:
+
+[source,xml]
+----
+    <application>
+        <resource-bundle>
+            <base-name>messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
+----
+
+Doing so, allows you to access your messages like this: `#{msg['foo.bar']}`
+
+WARNING: The properties files of the resource bundle have to be `ISO-8859-1` encoded.
+
+===== Links
+
+- https://www.mkyong.com/jsf2/jsf-2-internationalization-example/
+- https://stackoverflow.com/a/2668602/3574494
+
+==== Spring `MessageSource`
+
+As second option, Spring's own internationalization infrastructure (the `MessageSource`-API) can be used.
+
+JoinFaces exposes the Spring `MessageSource` as `Map` through the `sms` bean,
+so it can be easily used from JSF EL: `#{sms['my.message.key']}`.
+
+NOTE: The `MessageSource` which is auto-configured by Spring Boot uses `UTF-8` by default.
+This can be changed through the `spring.messages.encoding` property.
+
+===== Links
+
+- https://docs.spring.io/spring-boot/{spring-boot-version}/reference/features/internationalization.html
+- https://docs.spring.io/spring-framework/docs/{spring-version}/reference/html/core.html#context-functionality-messagesource

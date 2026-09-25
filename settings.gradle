@@ -1,0 +1,70 @@
+plugins {
+    id "io.freefair.settings.plugin-versions" version "9.5.0"
+    id "com.gradle.develocity" version "4.5.1"
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'joinfaces-parent'
+
+boolean isCiServer = System.getenv().containsKey("CI")
+
+develocity {
+    buildScan {
+        publishing.onlyIf { isCiServer }
+        termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
+        termsOfUseAgree = "yes"
+    }
+}
+
+buildCache {
+    remote(HttpBuildCache) {
+        url = 'https://build-cache.grefer-hosting.de/cache/'
+        push = isCiServer
+        credentials {
+            username = "joinfaces"
+            password = providers.gradleProperty('joinfacesBuildCachePassword').getOrElse(null)
+        }
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven { url = 'https://repo.spring.io/milestone' }
+    }
+}
+
+include ':joinfaces'
+include ':joinfaces-bom'
+include ':joinfaces-dependencies'
+include ':joinfaces-platform'
+include ':joinfaces-documentation'
+
+include ':joinfaces-test'
+include ':joinfaces-security-taglib'
+include ':joinfaces-autoconfigure'
+
+include ':joinfaces-starters'
+
+include ':joinfaces-starters:mojarra-spring-boot-starter'
+include ':joinfaces-starters:mojarra4-spring-boot-starter'
+include ':joinfaces-starters:myfaces-spring-boot-starter'
+include ':joinfaces-starters:myfaces4-spring-boot-starter'
+
+include ':joinfaces-starters:omnifaces-spring-boot-starter'
+include ':joinfaces-starters:faces-spring-boot-starter'
+include ':joinfaces-starters:security-spring-boot-starter'
+include ':joinfaces-starters:primefaces-spring-boot-starter'
+include ':joinfaces-starters:adminfaces-spring-boot-starter'
+include ':joinfaces-starters:bootsfaces-spring-boot-starter'
+include ':joinfaces-starters:tobago-spring-boot-starter'
+include ':joinfaces-starters:rewrite-spring-boot-starter'
+
+include ':joinfaces-starters:cdi-spring-boot-starter'
+include ':joinfaces-starters:weld-spring-boot-starter'
+include ':joinfaces-starters:openwebbeans-spring-boot-starter'
+
+include ':test-projects:tomcat-mojarra4'
+include ':test-projects:tomcat-myfaces4'
+include ':test-projects:jetty-mojarra'
+include ':test-projects:jetty-myfaces'

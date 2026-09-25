@@ -1,0 +1,54 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'java-library'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'io.freefair.lombok'
+    id 'io.freefair.maven-optional'
+    id 'io.freefair.maven-publish-java'
+}
+
+description = 'JoinFaces'
+tasks.named("jar", Jar) {
+    manifest.attributes('Automatic-Module-Name': 'joinfaces')
+}
+
+dependencies {
+    api platform(project(':joinfaces-platform'))
+
+    compileOnly 'jakarta.faces:jakarta.faces-api'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api'
+    compileOnly 'jakarta.persistence:jakarta.persistence-api'
+
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+    testCompileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
+    implementation 'io.github.classgraph:classgraph'
+
+    optional 'org.primefaces:primefaces::jakarta'
+    optional 'org.springframework.data:spring-data-jpa'
+    optional 'org.springframework:spring-web'
+    optional 'org.springframework.boot:spring-boot'
+    optional 'org.springframework.boot:spring-boot-servlet'
+
+    optional "org.apache.myfaces.core:myfaces-impl:$myfaces4Version"
+    optional "org.glassfish:jakarta.faces:$mojarra4Version"
+
+    optional 'org.springframework.boot:spring-boot-starter-tomcat'
+    optional 'org.springframework.boot:spring-boot-starter-jetty'
+
+    optional 'org.ocpsoft.rewrite:rewrite-servlet'
+    optional 'org.ocpsoft.rewrite:rewrite-integration-spring'
+
+    optional 'com.github.adminfaces:admin-template'
+
+    optional 'org.jboss.weld.servlet:weld-servlet-core'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation project(":joinfaces-starters:primefaces-spring-boot-starter")
+    testImplementation project(':joinfaces-test')
+    testRuntimeOnly 'org.hsqldb:hsqldb'
+    testImplementation "org.apache.myfaces.core:myfaces-impl:$myfaces4Version"
+}

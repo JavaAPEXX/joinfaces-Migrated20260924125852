@@ -1,0 +1,34 @@
+description = 'JSF Spring Boot Starter'
+tasks.named("jar", Jar) {
+    manifest.attributes('Automatic-Module-Name': 'joinfaces.starter.faces4')
+}
+
+dependencies {
+    api project(':joinfaces-autoconfigure')
+
+    api 'org.springframework.boot:spring-boot-starter'
+    api 'org.springframework.boot:spring-boot-servlet'
+    api 'org.springframework:spring-web'
+
+    api 'org.springframework.boot:spring-boot-starter-tomcat'
+    api project(':joinfaces-starters:mojarra-spring-boot-starter')
+}
+
+publishing {
+    publications {
+        relocation(MavenPublication) {
+            pom {
+                // Old artifact coordinates
+                artifactId = "jsf-spring-boot-starter"
+
+                distributionManagement {
+                    relocation {
+                        // New artifact coordinates
+                        artifactId = "faces-spring-boot-starter"
+                        message = "Rename jsf to faces"
+                    }
+                }
+            }
+        }
+    }
+}

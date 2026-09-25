@@ -1,0 +1,180 @@
+plugins {
+    id 'base'
+    id "io.freefair.git-version"
+    id "io.freefair.aggregate-jacoco-report"
+    id "io.freefair.lombok" apply false
+    id "io.freefair.maven-central.validate-poms" apply false
+    id "com.github.spotbugs" version "6.1.13" apply false
+    //id "de.aaschmid.cpd" version "3.4"
+    id 'org.jreleaser' version '1.26.0'
+}
+
+allprojects {
+    group = 'org.joinfaces'
+
+    plugins.withId("java") {
+        apply plugin: "io.freefair.lombok"
+
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(21)
+            }
+
+            withSourcesJar()
+            withJavadocJar()
+        }
+
+        tasks.withType(JavaCompile).configureEach {
+            options.encoding = 'UTF-8'
+            options.compilerArgs << '-parameters'
+        }
+
+        tasks.withType(Test).configureEach {
+            useJUnitPlatform()
+        }
+
+        dependencies {
+            testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+            testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+        }
+
+        plugins.withId("io.freefair.maven-publish-java") {
+            publishing {
+                publications {
+                    mavenJava(MavenPublication) {
+                        versionMapping {
+                            usage('java-api') {
+                                fromResolutionOf('runtimeClasspath')
+                            }
+                            usage('java-runtime') {
+                                fromResolutionResult()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        afterEvaluate { p ->
+            tasks.named('jar', Jar) {
+                manifest {
+                    attributes 'Implementation-Title': "$p.description",
+                            'Implementation-Version': "$p.version",
+                            'Implementation-Vendor': "JoinFaces"
+                }
+            }
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs += ['-Werror']
+    }
+
+    tasks.withType(Javadoc).configureEach {
+        failOnError = false
+    }
+
+    tasks.withType(Tar).configureEach {
+        enabled = false
+    }
+
+    plugins.withId("jacoco") {
+        tasks.withType(JacocoReport).configureEach {
+            reports.xml.required = true
+        }
+    }
+
+    plugins.withId("maven-publish") {
+
+        project.apply plugin: "io.freefair.maven-central.validate-poms"
+
+        publishing {
+            publications.withType(MavenPublication) {
+                pom {
+                    url = provider { 'https://docs.joinfaces.org/' + project.version + '/reference/' }
+                    name = provider { project.description }
+                    description = provider { project.description }
+                    inceptionYear = '2016'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    organization {
+                        name = 'JoinFaces'
+                        url = 'https://github.com/joinfaces'
+                    }
+                    developers {
+                        developer {
+                            id = 'persapiens'
+                            name = 'Marcelo Romulo Fernandes'
+                            email = 'persapiens@gmail.com'
+                            timezone = '-3'
+                        }
+                        developer {
+                            id = 'larsgrefer'
+                            name = 'Lars Grefer'
+                            email = 'github@larsgrefer.de'
+                            timezone = 'Europe/Berlin'
+                        }
+                    }
+                    ciManagement {
+                        system = 'GitHub Actions'
+                        url = 'https://github.com/joinfaces/joinfaces/actions'
+                    }
+                    issueManagement {
+                        system = 'GitHub Issues'
+                        url = 'https://github.com/joinfaces/joinfaces/issues'
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/joinfaces/joinfaces.git'
+                        developerConnection = 'scm:git:git@github.com:joinfaces/joinfaces.git'
+                        url = 'https://github.com/joinfaces/joinfaces/'
+                    }
+                }
+            }
+
+            repositories {
+                maven {
+                    name = "stagingDeploy"
+                    url = rootProject.layout.buildDirectory.dir('staging-deploy')
+                }
+            }
+        }
+    }
+}
+
+// https://github.com/aaschmid/gradle-cpd-plugin/issues/76
+//tasks.named("cpdCheck") {
+//    exclude "**/*Test.java"
+//    exclude "**/*IT.java"
+//    exclude "**/*__*.java"
+//    exclude "**/SecurityConfiguration.java"
+//}
+
+apply plugin: "maven-publish"
+
+jreleaser {
+    project {
+        name = "JoinFaces"
+        inceptionYear = "2016"
+        license = 'Apache-2.0'
+    }
+    signing {
+        active = 'ALWAYS'
+        armored = true
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                sonatype {
+                    active = 'ALWAYS'
+                    url = 'https://central.sonatype.com/api/v1/publisher'
+                    stagingRepository('build/staging-deploy')
+                    checksums = false //Done by Gradle
+                }
+            }
+        }
+    }
+}

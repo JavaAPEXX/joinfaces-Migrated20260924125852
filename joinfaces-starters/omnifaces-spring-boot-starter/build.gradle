@@ -1,0 +1,16 @@
+description = 'Omnifaces Spring Boot Starter'
+tasks.named("jar", Jar) {
+    manifest.attributes('Automatic-Module-Name': 'joinfaces.starter.omnifaces')
+}
+
+dependencies {
+    api project(':joinfaces-starters:faces-spring-boot-starter')
+    api 'org.omnifaces:omnifaces'
+    api(project(':joinfaces-starters:cdi-spring-boot-starter')) {
+        exclude group: "jakarta.annotation", module: "jakarta.annotation-api"
+    }
+
+    runtimeOnly "jakarta.validation:jakarta.validation-api"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}

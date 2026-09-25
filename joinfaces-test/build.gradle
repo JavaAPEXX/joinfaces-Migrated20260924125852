@@ -1,0 +1,25 @@
+plugins {
+    id "com.github.spotbugs"
+    id "java-library"
+    id "checkstyle"
+    id "io.freefair.lombok"
+    id "io.freefair.maven-optional"
+    id "io.freefair.maven-publish-java"
+}
+
+description = 'JoinFaces Test'
+tasks.named("jar", Jar) {
+    manifest.attributes('Automatic-Module-Name': 'joinfaces.test')
+}
+
+dependencies {
+    api platform(project(':joinfaces-platform'))
+
+    api 'org.springframework.boot:spring-boot-starter-test'
+    api 'org.junit.jupiter:junit-jupiter-api'
+
+    optional 'org.springframework.boot:spring-boot-starter-web'
+    optional "org.glassfish:jakarta.faces:$mojarra4Version"
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}

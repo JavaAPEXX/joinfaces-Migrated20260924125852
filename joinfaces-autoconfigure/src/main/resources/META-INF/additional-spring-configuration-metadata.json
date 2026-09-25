@@ -1,0 +1,608 @@
+{
+  "groups": [
+    {
+      "name": "joinfaces.view-scope",
+      "type": "org.joinfaces.autoconfigure.viewscope.ViewScopeAutoConfiguration",
+      "sourceType": "org.joinfaces.autoconfigure.viewscope.ViewScopeAutoConfiguration"
+    },
+    {
+      "name": "joinfaces.faces-servlet",
+      "description": "Configures the FacesServlet handled by JoinFaces."
+    }
+  ],
+  "properties": [
+    {
+      "name": "joinfaces.faces-servlet.url-mappings",
+      "defaultValue": [
+        "/faces/*",
+        "*.jsf",
+        "*.faces",
+        "*.xhtml"
+      ]
+    },
+    {
+      "name": "joinfaces.view-scope.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "Enables the registration of JoinFaces view scope implementation.",
+      "sourceType": "org.joinfaces.autoconfigure.viewscope.ViewScopeAutoConfiguration"
+    },
+    {
+      "name": "joinfaces.mojarra.disable-unicode-escaping",
+      "defaultValue": false
+    },
+    {
+      "name": "joinfaces.rewrite.base-packages",
+      "defaultValue": [
+        "none"
+      ]
+    },
+    {
+      "name": "joinfaces.rewrite.filter.url-patterns",
+      "defaultValue": [
+        "/*"
+      ]
+    },
+    {
+      "name": "joinfaces.rewrite.filter.dispatcher-types",
+      "defaultValue": [
+        "forward",
+        "include",
+        "request",
+        "async",
+        "error"
+      ]
+    },
+    {
+      "name": "joinfaces.jsf.always-perform-validation-when-required-is-true",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.always-perform-validation-when-required-is-true"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.client-window-mode",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.client-window-mode"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.config-files",
+      "type": "java.util.List<java.lang.String>",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.config-files"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.datetimeconverter-default-timezone-is-system-timezone",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.datetimeconverter-default-timezone-is-system-timezone"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.disable-facesservlet-to-xhtml",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.disable-facesservlet-to-xhtml"
+      }
+    },
+    {
+      "name": "joinfaces.faces.enable-websocket-endpoint",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.enable-websocket-endpoint"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-buffer-size",
+      "type": "java.lang.Integer",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-buffer-size"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-decorators",
+      "type": "java.util.List<java.lang.Class<? extends jakarta.faces.view.facelets.TagDecorator>>",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-decorators"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-libraries",
+      "type": "java.util.List<java.lang.String>",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-libraries"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-refresh-period",
+      "type": "java.lang.Integer",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-refresh-period"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-skip-comments",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-skip-comments"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-suffix",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-suffix"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.facelets-view-mappings",
+      "type": "java.util.List<java.lang.String>",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.facelets-view-mappings"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.full-state-saving-view-ids",
+      "type": "java.util.List<java.lang.String>",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.full-state-saving-view-ids"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.interpret-empty-string-submitted-values-as-null",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.interpret-empty-string-submitted-values-as-null"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.lifecycle-id",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.lifecycle-id"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.partial-state-saving",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.partial-state-saving"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.project-stage",
+      "type": "jakarta.faces.application.ProjectStage",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.project-stage"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.resource-excludes",
+      "type": "java.util.List<java.lang.String>",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.resource-excludes"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.separator-char",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.separator-char"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.serialize-server-state",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.serialize-server-state"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.state-saving-method",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.state-saving-method"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.validate-empty-fields",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.validate-empty-fields"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.validator.disable-default-bean-validator",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.validator.disable-default-bean-validator"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.validator.enable-validate-whole-bean",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.validator.enable-validate-whole-bean"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.viewroot-phase-listener-queues-exceptions",
+      "type": "java.lang.Boolean",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.viewroot-phase-listener-queues-exceptions"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.webapp-contracts-directory",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.webapp-contracts-directory"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.webapp-resources-directory",
+      "type": "java.lang.String",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.webapp-resources-directory"
+      }
+    },
+    {
+      "name": "joinfaces.jsf.websocket-endpoint-port",
+      "type": "java.lang.Integer",
+      "deprecation": {
+        "level": "error",
+        "replacement": "joinfaces.faces.websocket-endpoint-port"
+      }
+    }
+  ],
+  "hints": [
+    {
+      "name": "joinfaces.faces.state-saving-method",
+      "values": [
+        {
+          "value": "client",
+          "description": "Typically saved as a hidden field in the subsequent form submit."
+        },
+        {
+          "value": "server",
+          "description": "Typically saved in HttpSession."
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.faces.client-window-mode",
+      "values": [
+        {
+          "value": "none"
+        },
+        {
+          "value": "url"
+        }
+      ],
+      "providers": [
+        {
+          "name": "any"
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.faces.validate-empty-fields",
+      "values": [
+        {
+          "value": "true"
+        },
+        {
+          "value": "auto"
+        }
+      ],
+      "providers": [
+        {
+          "name": "any"
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.faces.facelets-resource-resolver",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "jakarta.faces.view.facelets.ResourceResolver",
+            "concrete": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.mojarra.disable-unicode-escaping",
+      "values": [
+        {
+          "value": "auto",
+          "description": "The response encoding will be checked: If the encoding is of the UTF family of encodings no unicode or html entity encoding will occur, however, if the response stream encoding is ISO-8859-1 then the ISO characters above a certain range will be encoded as HTML entities and any characters above that range will be written as decimal references."
+        },
+        {
+          "value": "true",
+          "description": "No escaping will occur assuming that the response encoding can properly handle all characters."
+        },
+        {
+          "value": "false",
+          "description": "Any characters above a certain range will be escaped as either an HTML entity or a decimal reference."
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.mojarra.facelet-factory",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "com.sun.faces.facelets.FaceletFactory",
+            "concrete": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.myfaces.el-resolver-predicate",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "java.util.function.Predicate",
+            "concrete": true
+          }
+        },
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.apache.commons.collections.Predicate",
+            "concrete": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.myfaces.serial-factory",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.apache.myfaces.shared.util.serial.SerialFactory",
+            "concrete": true
+          }
+        },
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.apache.myfaces.spi.SerialFactory",
+            "concrete": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.omnifaces.cache-provider",
+      "providers": [
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.omnifaces.util.cache.CacheProvider",
+            "concrete": true
+          }
+        },
+        {
+          "name": "class-reference",
+          "parameters": {
+            "target": "org.omnifaces.component.output.cache.CacheProvider",
+            "concrete": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.primefaces.theme",
+      "values": [
+        {
+          "value": "afterdark"
+        },
+        {
+          "value": "afternoon"
+        },
+        {
+          "value": "afterwork"
+        },
+        {
+          "value": "aristo"
+        },
+        {
+          "value": "black-tie"
+        },
+        {
+          "value": "blitzer"
+        },
+        {
+          "value": "bluesky"
+        },
+        {
+          "value": "bootstrap"
+        },
+        {
+          "value": "casablanca"
+        },
+        {
+          "value": "cruze"
+        },
+        {
+          "value": "cupertino"
+        },
+        {
+          "value": "dark-hive"
+        },
+        {
+          "value": "delta"
+        },
+        {
+          "value": "dot-luv"
+        },
+        {
+          "value": "eggplant"
+        },
+        {
+          "value": "excite-bike"
+        },
+        {
+          "value": "flick"
+        },
+        {
+          "value": "glass-x"
+        },
+        {
+          "value": "home"
+        },
+        {
+          "value": "hot-sneaks"
+        },
+        {
+          "value": "humanity"
+        },
+        {
+          "value": "le-frog"
+        },
+        {
+          "value": "midnight"
+        },
+        {
+          "value": "mint-choc"
+        },
+        {
+          "value": "omega"
+        },
+        {
+          "value": "overcast"
+        },
+        {
+          "value": "pepper-grinder"
+        },
+        {
+          "value": "redmond"
+        },
+        {
+          "value": "rocket"
+        },
+        {
+          "value": "sam"
+        },
+        {
+          "value": "smoothness"
+        },
+        {
+          "value": "south-street"
+        },
+        {
+          "value": "start"
+        },
+        {
+          "value": "sunny"
+        },
+        {
+          "value": "swanky-purse"
+        },
+        {
+          "value": "trontastic"
+        },
+        {
+          "value": "twitter"
+        },
+        {
+          "value": "bootstrap"
+        },
+        {
+          "value": "ui-darkness"
+        },
+        {
+          "value": "ui-lightness"
+        },
+        {
+          "value": "vader"
+        }
+      ],
+      "providers": [
+        {
+          "name": "any"
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.primefaces.submit",
+      "values": [
+        {
+          "value": "full"
+        },
+        {
+          "value": "partial"
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.primefaces.dir",
+      "values": [
+        {
+          "value": "ltr",
+          "description": "Left to right."
+        },
+        {
+          "value": "rtl",
+          "description": "Right to left."
+        }
+      ]
+    },
+    {
+      "name": "joinfaces.primefaces.uploader",
+      "values": [
+        {
+          "value": "auto",
+          "description": "This is the default mode and PrimeFaces tries to detect the best method by checking the runtime environment, if JSF runtime is at least 2.2 native uploader is selected, otherwise commons."
+        },
+        {
+          "value": "native",
+          "description": "Native mode uses servlet 3.x Part API to upload the files and if JSF runtime is less than 2.2 and exception is being thrown."
+        },
+        {
+          "value": "commons",
+          "description": "This option chooses commons fileupload regardless of the environment, advantage of this option is that it works even on a Servlet 2.5 environment."
+        }
+      ]
+    }
+  ]
+}
